@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Catalago de Musicas Soul</h1>
+    <p id="lista"> </p>
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200)
+            {
+                var disco = JSON.parse(this.responseText);
+            document.getElementById("lista").innerHTML = `
+            <h3> Dados do Disco </h3>
+            <p> ID: ${disco['id']} </p>
+            <p> Titulo: ${disco.titulo} </p>
+            <p> Artista: ${disco.artista} </p>
+            <h4> Ficha: </h4>
+            <table>
+                <tr>
+                        <th>Ano</th>
+                        <th>Pais</th>
+                        <th>Gravadora</th>
+                        <th>Preco</th>
+                        ${pegaMusica()}
+                        `       
+                        function pegaMusica()
+                        {
+                        let musicaArray = disco.ficha;
+                        let tabela = "";
+                        for (let i in musicaArray)
+                        {
+                        tabela += `
+                 </tr>
+                 <td> ${musicaArray[i]['ano']} </td>
+                 <td> ${musicaArray[i]['pais']} </td>
+                 <td> ${musicaArray[i]['gravadora']} </td>
+                 <td> ${musicaArray[i]['preco']} </td>
+                  `
+                  }
+                  return tabela;
+                  }
+                  }
+                  };
+
+                  xmlhttp.open("POST", "catalago.json", true);
+                  xmlhttp.send();
+                </script>
+            </tr>
+         </table>
+    <br>
+    <p>Acesso ao arquivo Json <a href="catalago.json" target="_blank"></a> catalago.json</p>
+</body>
+</html>
